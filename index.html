@@ -1,51 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#03050b">
-  <meta name="description" content="An interactive field journal from the solar system to the edge of the Local Group.">
-  <title>Field Notes from the Outer Dark</title>
-  <link rel="stylesheet" href="./site.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <title>Toolbox</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main id="app" aria-label="Field Notes from the Outer Dark interactive space essay">
-    <canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex="0" aria-label="Interactive space scene"></canvas>
-    <a id="toolbox-home" href="../../index.html" aria-label="Return to Toolbox">← Toolbox</a>
-    <div id="loading" role="status" aria-live="polite">
-      <div class="loading-mark"></div>
-      <p>Calibrating optics</p>
-      <span id="status">Preparing the field journal…</span>
-    </div>
-    <div id="error" role="alert" hidden></div>
+  <header class="site-header">
+    <a class="brand" href="#top">toolbox</a>
+    <nav class="main-nav">
+      <a href="#tools">Tools</a>
+      <a href="#about">About</a>
+      <button class="theme-toggle" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">Dark</button>
+    </nav>
+  </header>
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="#top" id="crumbHome">Home</a>
+    <span class="crumb-sep" aria-hidden="true">/</span>
+    <a href="#tools" id="crumbSection" class="current">Tools</a>
+    <span class="crumb-sep crumb-tool-sep" aria-hidden="true" hidden>/</span>
+    <span id="crumbTool" class="current" hidden></span>
+    <span class="crumb-status" id="crumbStatus"></span>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <h1>Not another timer and calculator pack</h1>
+      <p class="hero-sub">These are for the awkward middle bits: things you are stuck on, replies you owe, purchases you should wait on, and decisions you will forget why you made.</p>
+      <a class="button" href="#tools">See tools</a>
+    </section>
+
+    <section class="tools-section" id="tools">
+      <h2>Tools</h2>
+      <p class="section-note">Seven small tools, plus one journey across the solar system.</p>
+
+      <div class="tool-grid">
+        <a class="tool-card" href="waiting.html">
+          <strong>Waiting on</strong>
+          <span>Who or what is blocking you, and how many days it has been.</span>
+        </a>
+        <a class="tool-card" href="replies.html">
+          <strong>Reply debt</strong>
+          <span>People you still owe a message. The quiet guilt list.</span>
+        </a>
+        <a class="tool-card" href="impulse.html">
+          <strong>Impulse lock</strong>
+          <span>Name the thing you want to buy. It stays locked for a set time.</span>
+        </a>
+        <a class="tool-card" href="leaveby.html">
+          <strong>Leave by</strong>
+          <span>You need to arrive at a time. This says when to walk out the door.</span>
+        </a>
+        <a class="tool-card" href="decisions.html">
+          <strong>Decision log</strong>
+          <span>What you chose, why, and a date to look back without rewriting history.</span>
+        </a>
+        <a class="tool-card" href="meetcost.html">
+          <strong>Meeting cost</strong>
+          <span>People times rate times minutes. Makes long meetings feel real.</span>
+        </a>
+        <a class="tool-card" href="loops.html">
+          <strong>Open loops</strong>
+          <span>Unfinished thoughts that are not tasks yet. Close them or write them down properly.</span>
+        </a>
+        <a class="tool-card" href="space/web/index.html">
+          <strong>Space explorer</strong>
+          <span>Move from the planets and dwarf worlds to the edge of the Local Group.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="about-section" id="about">
+      <h2>About</h2>
+      <p>Built for the gaps between normal apps. No login. Lists and logs stay in local storage on this device. Clear site data and they go away.</p>
+      <p>There is no password generator, calculator, or unit converter here on purpose.</p>
+    </section>
   </main>
-  <script>
-    var statusElement = document.getElementById('status');
-    var loadingElement = document.getElementById('loading');
-    var errorElement = document.getElementById('error');
-    var Module = {
-      canvas: document.getElementById('canvas'),
-      print: function(text) { console.log(text); },
-      printErr: function(text) { console.error(text); },
-      setStatus: function(text) {
-        if (statusElement && text) statusElement.textContent = text;
-      },
-      onRuntimeInitialized: function() {
-        if (loadingElement) loadingElement.classList.add('ready');
-        setTimeout(function() {
-          if (loadingElement) loadingElement.remove();
-          Module.canvas.focus();
-        }, 450);
-      },
-      onAbort: function(why) {
-        if (loadingElement) loadingElement.hidden = true;
-        if (errorElement) {
-          errorElement.hidden = false;
-          errorElement.textContent = 'The interactive scene could not start. Please refresh the page or try a current version of Chrome, Firefox, Safari, or Edge. ' + why;
-        }
-      }
-    };
-  </script>
-  <script async type="text/javascript" src="index.js"></script>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>toolbox</span>
+      <span>runs in your browser</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
